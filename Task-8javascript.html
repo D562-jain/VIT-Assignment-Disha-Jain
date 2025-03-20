@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task-8 Registration Form</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to bottom, #fff2cc, #f4cccc);
+        text-align: center;
+      }
+      .container {
+        width: 40%;
+        margin: auto;
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px gray;
+        text-align: left;
+      }
+      h2 {
+        text-align: center;
+        color: blue;
+        font-size: 22px;
+      }
+      table {
+        width: 100%;
+      }
+      td {
+        padding: 5px;
+      }
+      label {
+        font-weight: bold;
+        font-size: 14px;
+      }
+      input,
+      select,
+      textarea {
+        width: 90%;
+        padding: 6px;
+        border: 1px solid gray;
+        border-radius: 5px;
+      }
+      .error {
+        color: red;
+        font-size: 14px;
+        font-weight: bold;
+        display: none; /* Initially hidden */
+      }
+      .register-btn {
+        background-color: red;
+        color: white;
+        font-size: 16px;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        display: block;
+        margin: 10px auto;
+      }
+      .languages {
+        display: flex;
+        gap: 10px;
+      }
+      .small-text {
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Registration Form</h2>
+
+    <div class="container">
+      <form id="registerForm" onsubmit="return validateForm()">
+        <table>
+          <tr>
+            <td><label>First Name:</label></td>
+            <td><input type="text" id="fname" /></td>
+            <td><span class="error" id="fnameError">POOR</span></td>
+          </tr>
+          <tr>
+            <td><label>Last Name:</label></td>
+            <td><input type="text" id="lname" /></td>
+            <td><span class="error" id="lnameError">POOR</span></td>
+          </tr>
+          <tr>
+            <td><label>Email:</label></td>
+            <td><input type="email" id="email" /></td>
+            <td>
+              <span class="error" id="emailError">POOR (Invalid Email)</span>
+            </td>
+          </tr>
+          <tr>
+            <td><label>Password:</label></td>
+            <td><input type="password" id="password" /></td>
+            <td><span class="error" id="passwordError">POOR</span></td>
+          </tr>
+          <tr>
+            <td><label>Re-enter Password:</label></td>
+            <td><input type="password" id="confirmPassword" /></td>
+            <td>
+              <span class="error" id="confirmPasswordError"
+                >POOR OR MISMATCH</span
+              >
+            </td>
+          </tr>
+          <tr>
+            <td><label>Gender:</label></td>
+            <td>
+              <input type="radio" name="gender" value="Male" /> Male
+              <input type="radio" name="gender" value="Female" /> Female
+            </td>
+          </tr>
+          <tr>
+            <td><label>Age:</label></td>
+            <td><input type="number" id="age" /></td>
+            <td><span class="error" id="ageError">POOR (Must be > 0)</span></td>
+          </tr>
+          <tr>
+            <td><label>Phone Number:</label></td>
+            <td><input type="text" id="phone" /></td>
+            <td>
+              <span class="error" id="phoneError">POOR (10 digits only)</span>
+            </td>
+          </tr>
+          <tr>
+            <td><label>Address:</label></td>
+            <td><textarea id="address"></textarea></td>
+            <td><span class="error" id="addressError">POOR</span></td>
+          </tr>
+          <tr>
+            <td><label>State:</label></td>
+            <td><input type="text" id="state" /></td>
+            <td><span class="error" id="stateError">POOR</span></td>
+          </tr>
+          <tr>
+            <td><label>Country:</label></td>
+            <td>
+              <select id="country">
+                <option value="">Choose your country</option>
+                <option value="India">India</option>
+                <option value="USA">USA</option>
+                <option value="UK">UK</option>
+                <option value="Canada">Canada</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><label>Languages Known:</label></td>
+            <td class="languages">
+              <input type="checkbox" value="English" /> English
+              <input type="checkbox" value="Hindi" /> Hindi
+              <input type="checkbox" value="Kannada" /> Kannada
+              <input type="checkbox" value="Telugu" /> Telugu
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <input type="checkbox" id="agree" />
+              <span class="small-text"
+                >Hereby I declare all the given details are true</span
+              >
+            </td>
+          </tr>
+        </table>
+
+        <button type="submit" class="register-btn">REGISTER</button>
+      </form>
+    </div>
+
+    <script>
+      function validateForm() {
+        let valid = true;
+
+        function showError(id, condition) {
+          let errorElement = document.getElementById(id);
+          if (condition) {
+            errorElement.style.display = "inline";
+            valid = false;
+          } else {
+            errorElement.style.display = "none";
+          }
+        }
+
+        showError(
+          "fnameError",
+          document.getElementById("fname").value.trim() === ""
+        );
+        showError(
+          "lnameError",
+          document.getElementById("lname").value.trim() === ""
+        );
+        showError(
+          "emailError",
+          !document.getElementById("email").value.includes("@")
+        );
+        showError(
+          "passwordError",
+          document.getElementById("password").value.length < 6
+        );
+        showError(
+          "confirmPasswordError",
+          document.getElementById("confirmPassword").value !==
+            document.getElementById("password").value
+        );
+        showError("ageError", document.getElementById("age").value <= 0);
+        showError(
+          "phoneError",
+          document.getElementById("phone").value.length !== 10 ||
+            isNaN(document.getElementById("phone").value)
+        );
+        showError(
+          "addressError",
+          document.getElementById("address").value.trim() === ""
+        );
+        showError(
+          "stateError",
+          document.getElementById("state").value.trim() === ""
+        );
+        showError("agreeError", !document.getElementById("agree").checked);
+
+        return valid;
+      }
+    </script>
+  </body>
+</html>
